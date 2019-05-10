@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import ButtonAppBar from "./components/ui/ButtonAppBar";
+import PaperSheet from "./components/ui/PaperSheet";
+import UserPage from "./components/pages/UserPage";
+import ToDoPage from "./components/pages/ToDoPage";
+import {Route,Switch,withRouter} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+    handleRouteChange = (route) => {
+        this.props.history.push("/"+route);
+    }
+    render() {
+        return (
+                <div className="App">
+                    <ButtonAppBar handlePageOpen={this.handleRouteChange}/>
+                    <Switch>
+                        <Route path={"/users"} exact={true} component={UserPage}/>
+                        <Route path={"/todos"} exact={true} component={ToDoPage}/>
+                        <Route path={"/"} exact={true} render={() => (
+                            <PaperSheet title={"This is test React Material Application"}
+                                        text={"Please Choose Page"}/>
+                        )}/>
+                    </Switch>
+                </div>
+        );
+    }
 }
 
-export default App;
+export default withRouter(App);
