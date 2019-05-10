@@ -10,10 +10,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
+import indigo from '@material-ui/core/colors/indigo';
 
 const styles = {
     root: {
-        flexGrow: 1,
+        flexGrow: 1
     },
     grow: {
         flexGrow: 1,
@@ -36,7 +37,7 @@ function ButtonAppBar(props) {
                 };
                 return (
                     <div className={classes.root}>
-                        <AppBar position="static">
+                        <AppBar position="static" color="primary">
                             <Toolbar>
                                 <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
                                             aria-owns={open ? 'render-props-menu' : undefined}

@@ -7,10 +7,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Spinner from './Spinner';
+import indigo from '@material-ui/core/colors/indigo';
+import myTheme from './theme';
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 const CustomTableCell = withStyles(theme => ({
+
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: myTheme.palette.primary,
         color: theme.palette.common.white,
     },
     body: {
@@ -36,12 +41,12 @@ const styles = theme => ({
     },
 });
 
-function printRow(row){
+function printRow(row) {
     const entries = Object.entries(row);
     const returnRows = [];
     for (const [key, value] of entries) {
-        if(key !== 'id')
-         returnRows.push(<CustomTableCell align="center" key={key + value}>{value}</CustomTableCell>);
+        if (key !== 'id')
+            returnRows.push(<CustomTableCell align="center" key={key + value}>{value}</CustomTableCell>);
     }
     return returnRows;
 }
@@ -49,9 +54,8 @@ function printRow(row){
 
 function CustomizedTable(props) {
     const {classes} = props;
-
-    return (
-        <Paper className={classes.root}>
+    let table =
+        <MuiThemeProvider theme={myTheme}>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow color="inherit">
@@ -65,11 +69,18 @@ function CustomizedTable(props) {
                 <TableBody>
                     {props.rows.map(row => (
                         <TableRow className={classes.row} key={row.id}>
-                           { printRow(row)}
+                            {printRow(row)}
                         </TableRow>
                     ))}
                 </TableBody>
-            </Table>
+            </Table>;
+        </MuiThemeProvider>
+    if (props.loading) {
+        table = <Spinner/>
+    }
+    return (
+        <Paper className={classes.root}>
+            {table}
         </Paper>
     );
 }

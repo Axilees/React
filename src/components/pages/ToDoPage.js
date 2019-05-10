@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import PaperSheet from "../ui/PaperSheet";
 import axios from 'axios';
 import CustomizedTable from "../ui/CustomizedTable";
 
 class ToDoPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {headers: ['Title', 'Completed'], rows: []}
+        this.state = {headers: ['Title', 'Completed'], rows: [], loading: true}
     }
 
     componentDidMount() {
@@ -15,13 +14,13 @@ class ToDoPage extends Component {
             response.data.map(item => {
                 rows.push({id: item.id, title: item.title, completed: item.completed.toString()});
             })
-            this.setState({rows: rows});
+            this.setState({rows: rows, loading: false});
         })
     }
 
     render() {
         return (
-            <CustomizedTable headers={this.state.headers} rows={this.state.rows}/>
+            <CustomizedTable headers={this.state.headers} rows={this.state.rows} loading={this.state.loading}/>
         );
     }
 

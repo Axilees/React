@@ -7,7 +7,8 @@ class UserPage extends Component {
         super(props);
         this.state = {
             headers: ['Name', 'Username', 'Email'],
-            rows: [{id: 1, name: 'Masha', username: 'SuperMasha', email: 'm@ooo.lv'}]
+            rows: [{id: 1, name: 'Masha', username: 'SuperMasha', email: 'm@ooo.lv'}],
+            loading:true
         }
     }
 
@@ -19,13 +20,13 @@ class UserPage extends Component {
                rows.push({id:item.id, name: item.name, username: item.username, email: item.email});
             });
             console.log(rows);
-            this.setState({rows: rows});
+            this.setState({rows: rows, loading: false});
         })
     }
 
     render() {
         return (
-            <CustomizedTable headers={this.state.headers} rows={this.state.rows}/>
+            <CustomizedTable headers={this.state.headers} rows={this.state.rows} loading={this.state.loading}/>
         );
     }
 
